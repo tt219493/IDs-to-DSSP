@@ -43,8 +43,8 @@ def ids_to_df(path_to_ids: str, use_lazy : bool = True, ids_only : bool = False,
 
     return df
 
-def df_to_output(df: pl.LazyFrame | pl.DataFrame, path_to_output_dir: str, output_name: str, use_rcsb_id : bool = False,
-                 is_formatted: bool = True, only_secondary_structure: bool = False, to_parquet: bool = False) -> None:
+def df_to_output(df: pl.LazyFrame | pl.DataFrame, path_to_output_dir: str, output_name: str, is_formatted: bool = True, 
+                 use_rcsb_id : bool = False, only_secondary_structure: bool = False, to_parquet: bool = False) -> None:
     '''
     Given a Polars LazyFrame or DataFrame with `id`, `amino_acid`, and `index`, output a TSV or Parquet file containing the data in the format used as the file input.
     Currently, it will also output all other columns present in the Frame.
@@ -57,10 +57,10 @@ def df_to_output(df: pl.LazyFrame | pl.DataFrame, path_to_output_dir: str, outpu
         Path to output directory
     output_name : str
         Name of outputted file
-    use_rcsb_id : bool = False
-        Output with 4 letter ID if False and RCSB ID (4 letter with sequence ID) if True
     is_formatted : bool = True
-        Output file will have IDs formatted as `{pdb_id}_{amino_acid}_{index}` if True and will remain separate if False
+        Output file will have IDs formatted as `{pdb_id}_{amino_acid}_{index}` if True and will remain separate if False. 
+    use_rcsb_id : bool = False
+        Output with 4 letter ID if False and RCSB ID (4 letter with sequence ID) if True. Only works if `is_formatted=True` 
     only_secondary_structure : bool = False
         Output with all columns present if False and only secondary structure if True. Only works if `is_formatted=True`
     to_parquet : bool = False
@@ -78,11 +78,11 @@ def df_to_output(df: pl.LazyFrame | pl.DataFrame, path_to_output_dir: str, outpu
                                             pl.col("index")],
                                             separator="_").alias('id'))
                 .drop('amino_acid', 'index'))
+        if use_rcsb_id:
+            df = df.drop(id)
         if only_secondary_structure:
-            df = df.select('id', 'secondary_structure', 'rcsb_id')
+            df = df.select('id', 'secondary_structure')
     
-    df = df.drop('rcsb_id')
-
     if type(df) == pl.LazyFrame:
         df = df.collect()
 
