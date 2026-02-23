@@ -1,7 +1,7 @@
 import polars as pl
 import os
 
-def ids_to_df(path_to_ids: str, use_lazy : bool = True, ids_only : bool = False, is_parquet : bool = False) -> pl.LazyFrame | pl.DataFrame:
+def ids_to_df(path_to_ids: str, use_lazy : bool = True, ids_only : bool = False, is_parquet : bool = False) -> pl.LazyFrame | pl.DataFrame | list[str]:
     '''
     Returns a Polars LazyFrame or DataFrame given a path to a TSV or parquet file containing PDB IDs.
     Assumes file contains header labeled `id` and formatted as `{pdb_id}_{amino_acid}_{index}` 
@@ -14,14 +14,15 @@ def ids_to_df(path_to_ids: str, use_lazy : bool = True, ids_only : bool = False,
     use_lazy : bool = True
         Returns LazyFrame if set to True and DataFrame if set to False
     ids_only : bool = False
-        Returns only unique IDs if set to True and includes everything if set to False
+        Returns list of unique IDs if set to True and includes everything if set to False
     is_parquet: bool = False
+        Use `pl.scan_csv()` if False or `pl.scan_parquet()` if True
 
     
     Returns
     -------
-    LazyFrame | DataFrame
-        LazyFrame or DataFrame containing information from the TSV file
+    LazyFrame | DataFrame | list[str]
+        LazyFrame or DataFrame containing information from the TSV file or list[str] if ids_only = True
 
     '''
     if is_parquet:
@@ -36,7 +37,7 @@ def ids_to_df(path_to_ids: str, use_lazy : bool = True, ids_only : bool = False,
     ).cast({'index' : pl.Int64})
 
     if ids_only:
-        df = df.select('id').unique('id')
+        df = df.select('id').unique('id').collect()['id'].to_list()
     
     if (not use_lazy):
         df = df.collect()
