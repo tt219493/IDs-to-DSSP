@@ -111,10 +111,11 @@ def df_to_fasta(df: pl.LazyFrame | pl.DataFrame, path_to_output_dir: str, output
     -------
     None
     '''
+    id = 'rcsb_id' if use_rcsb_id else 'id'
     df = (df.with_columns(pl.concat_str(
                             [
                                 pl.lit(">"),
-                                pl.col("rcsb_id"),
+                                pl.col(id),
                                 pl.lit("\n"),
                                 pl.col("sequence"),
                                 pl.lit("\n"),
@@ -129,7 +130,53 @@ def df_to_fasta(df: pl.LazyFrame | pl.DataFrame, path_to_output_dir: str, output
         for row in df.iter_rows(named=True):
             f.write(row['output'])
 
+
+def combine_to_full(df1: pl.LazyFrame | pl.DataFrame, df2: pl.LazyFrame | pl.DataFrame, 
+                   use_lazy: bool = True) -> pl.LazyFrame | pl.DataFrame:
+    '''
+    Given two Lazy or DataFrames, with sharing columns `id`, `strand_id` 
+    with one having `secondary_structure`, `index`, and `amino_acid` and the other with `sequence` and `length`,
+    join into one Lazy or DataFrame
+
+    Parameters
+    ----------
+    df1 : pl.LazyFrame | pl.DataFrame
+        First DataFrame to join
+    df2: pl.LazyFrame | pl.DataFrame
+        Second DataFrame to join
+    use_lazy : bool = True
+        Combine and output as LazyFrames
     
+    Returns
+    -------
+    None
+    '''
+
+    if use_lazy:
+        if type(df1) == pl.DataFrame:
+            df1 = df1.lazy()
+        if type(df2) == pl.DataFrame:
+            df2 = df2.lazy()
+    else:
+        if type(df1) == pl.LazyFrame:
+            df1 = df1.collect()
+        if type(df2) == pl.LazyFrame:
+            df2 = df2.collect()
+
+    
+    return (df1.join(df2, on=['id','strand_id'], how='inner')
+                .group_by('rcsb_id')
+                .agg([pl.col('id').first(),
+                     pl.col('amino_acid'),
+                     pl.col('index'),
+                     pl.col('secondary_structure'),
+                     pl.col('sequence').first(),
+                     pl.col('length').first()])
+                .explode([
+                     pl.col('amino_acid'),
+                     pl.col('index'),
+                     pl.col('secondary_structure')]))
+
     
     
 
