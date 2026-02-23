@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools >= 77.0.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ids_to_dssp"
+version = "0.0.1"
+authors = [
+  { name="tt219493", email="tt219493@gmail.com" },
+]
+description = "Retrieves secondary structure using DSSP from RCSB PDB IDs"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3.9",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+dependencies = [
+    "bio",
+    "biopython",
+    "numpy<=1.26.4",
+    "polars",
+    "rcsb-api"
+]
+[project.urls]
+Homepage = "https://github.com/tt219493/ids-to-dssp"
