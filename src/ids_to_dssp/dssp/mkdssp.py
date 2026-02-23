@@ -1,5 +1,5 @@
 # need to install mkdssp from https://github.com/PDB-REDO/dssp
-from mkdssp as dssp
+from mkdssp import dssp
 import polars as pl 
 from concurrent.futures import ProcessPoolExecutor
 
