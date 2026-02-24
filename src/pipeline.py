@@ -1,6 +1,6 @@
-from ids_to_dssp.pdb.pdb import *
-from ids_to_dssp.dssp.mkdssp import *
-from ids_to_dssp.processing.df import *
+from ids_to_dssp.pdb import *
+from ids_to_dssp.dssp import *
+from ids_to_dssp.processing import *
 import polars as pl
 
 def ids_to_ss(input_path: str, download_path: str, parquet_input: bool = False) -> pl.LazyFrame:
