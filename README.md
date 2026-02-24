@@ -35,11 +35,9 @@ pip install .
 ```
 and in Python
 ```Python
-import sys
-sys.path.append('/content/ids-to-dssp/src')
-
 import ids-to-dssp
 ```
+(Might need to add directory to PATH if not working)
 
 ### Colab Specific Requirements
 ```Python
@@ -70,6 +68,12 @@ After running `cmake -S . -B build-DBUILD_PYTHON_MODULE=ON`
 !grep -rl 'std::format' build/_deps/ | xargs sed -i 's/std::format/fmt::format/g'
 ```
 
+After using `pip` to install
+```Python
+import sys
+sys.path.append('/content/ids-to-dssp/src')
+```
+
 Limitations
 ---
 * Currently only tested in Colab
@@ -89,11 +93,26 @@ Future Expansions
 Citations
 --- 
 ```
-Hekkelman ML, Salmoral DÁ, Perrakis A, Joosten RP DSSP 4: FAIR annotation of protein secondary structure. Protein Science. 2025; 34(8):e70208. 
+Hekkelman ML, Salmoral DÁ, Perrakis A, Joosten
+RP DSSP 4: FAIR annotation of protein secondary structure.
+Protein Science. 2025; 34(8):e70208. 
 
-Kabsch W, Sander C. Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features. Biopolymers 1983; 22:2577-2637. 
+Kabsch W, Sander C.
+Dictionary of protein secondary structure:
+pattern recognition of hydrogen-bonded and geometrical features.
+Biopolymers 1983; 22:2577-2637. 
 
-Dennis W. Piehl, Brinda Vallat, Ivana Truong, Habiba Morsy, Rusham Bhatt, Santiago Blaumann, Pratyoy Biswas, Yana Rose, Sebastian Bittrich, Jose M. Duarte, Joan Segura, Chunxiao Bi, Douglas Myers-Turnbull, Brian P. Hudson, Christine Zardecki, Stephen K. Burley. rcsb-api: Python Toolkit for Streamlining Access to RCSB Protein Data Bank APIs, Journal of Molecular Biology, 2025. DOI: 10.1016/j.jmb.2025.168970
+Dennis W. Piehl, Brinda Vallat, Ivana Truong, Habiba Morsy, Rusham Bhatt,
+Santiago Blaumann, Pratyoy Biswas, Yana Rose, Sebastian Bittrich, Jose M. Duarte,
+Joan Segura, Chunxiao Bi, Douglas Myers-Turnbull, Brian P. Hudson, Christine Zardecki,
+Stephen K. Burley.
+rcsb-api: Python Toolkit for Streamlining Access to RCSB Protein Data Bank APIs,
+Journal of Molecular Biology, 2025. DOI: 10.1016/j.jmb.2025.168970
 
-Yana Rose, Jose M. Duarte, Robert Lowe, Joan Segura, Chunxiao Bi, Charmi Bhikadiya, Li Chen, Alexander S. Rose, Sebastian Bittrich, Stephen K. Burley, John D. Westbrook. RCSB Protein Data Bank: Architectural Advances Towards Integrated Searching and Efficient Access to Macromolecular Structure Data from the PDB Archive, Journal of Molecular Biology, 2020. DOI: 10.1016/j.jmb.2020.11.003
+Yana Rose, Jose M. Duarte, Robert Lowe, Joan Segura, Chunxiao Bi,
+Charmi Bhikadiya, Li Chen, Alexander S. Rose, Sebastian Bittrich, Stephen K. Burley,
+John D. Westbrook.
+RCSB Protein Data Bank: Architectural Advances Towards Integrated Searching
+and Efficient Access to Macromolecular Structure Data from the PDB Archive,
+Journal of Molecular Biology, 2020. DOI: 10.1016/j.jmb.2020.11.003
 ```
