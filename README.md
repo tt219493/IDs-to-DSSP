@@ -83,6 +83,7 @@ Limitations
 * `dssp` implementation is fairly slow for a large number of files
     * ~0.15 seconds per file
     * [DSSP API](https://pdb-redo.eu/dssp/api-doc) unfortunately does not support batched calls
+ *  `ids-to-dssp.pipeline` is untested since `dssp` takes so long to run. The individual modules that make up `pipeline` are working.
 
 Future Expansions
 --- 
