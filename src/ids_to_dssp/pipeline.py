@@ -80,7 +80,7 @@ def ids_to_seq(input_path: str, parquet_input: bool = False) -> pl.LazyFrame:
 
     '''
     id_list = ids_to_df(input_path, ids_only=True, is_parquet=parquet_input)
-    return ids_to_sequences(ids_list)
+    return ids_to_sequences(id_list)
 
 def ids_to_seq_output(input_path : str, output_path: str, output_name: str, 
                       parquet_output: bool = False, fasta_ouput: bool = False,
