@@ -35,6 +35,9 @@ pip install .
 ```
 and in Python
 ```Python
+import sys
+sys.path.append('/content/ids-to-dssp/src')
+
 import ids-to-dssp
 ```
 
