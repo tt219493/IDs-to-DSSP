@@ -19,7 +19,6 @@ license-files = ["LICEN[CS]E*"]
 dependencies = [
     "bio",
     "biopython",
-    "numpy<=1.26.4",
     "polars",
     "rcsb-api",
     "rs-dssp==0.2.1" 
