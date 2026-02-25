@@ -24,6 +24,11 @@ pip install .
 and in Python
 ```Python
 import ids-to-dssp
+
+import ids_to_dssp.processing
+import ids_to_dssp.pdb
+import ids_to_dssp.rs_dssp
+import ids_to_dssp.pipeline
 ```
 (Might need to add directory to PATH if not working)
 ___
