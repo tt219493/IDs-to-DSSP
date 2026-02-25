@@ -4,7 +4,7 @@
 Simple Python package to provide labeled secondary structure and protein sequence data when given a file containing IDs from the Protein Data Bank (PDB).
 
 ___
-To retrieve secondary structure from the file containing IDs, it utilizes `Biopython` to download mmCif/PDB files from wwPDB.  
+To retrieve secondary structure from the file (TSV or Parquet) containing IDs, it utilizes `Biopython` to download mmCif/PDB files from wwPDB.  
 Then using those files as input, [dssp](https://github.com/PDB-REDO/dssp) (implementation by Hekkelman et al. in the Perrakis group @ NKI Research) outputs secondary structures.
 
 To retrieve protein sequence data from the IDs, it queries using the `rcsb-api` for Python to retrieve relevant sequence data.
@@ -92,6 +92,7 @@ Future Expansions
 * Add Jupyter notebooks with example use.
 * Implementing support for [DSSP API](https://pdb-redo.eu/dssp/api-doc) for a small number of files
 * Utilizing different implementation of DSSP (e.g. [rs-dssp](pypi.org/project/rs-dssp/)) for faster processing (although accuracy might be lower)
+* Support for more file inputs/outputs
 * Upload to PyPI after polishing
 
 Citations
