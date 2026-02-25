@@ -38,7 +38,7 @@ and in Python
 import ids-to-dssp
 ```
 (Might need to add directory to PATH if not working)
-
+___
 ### Colab Specific Requirements
 ```Python
 !pip install Bio
@@ -73,7 +73,7 @@ After using `pip` to install
 import sys
 sys.path.append('/content/ids-to-dssp/src')
 ```
-
+___
 Limitations
 ---
 * Currently only tested in Colab
