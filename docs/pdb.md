@@ -1,4 +1,4 @@
-`ids-to-dssp.pdb`
+`ids_to_dssp.pdb`
 ===
 ```Python
 def ids_to_pdb_download(ids: list[str], output_dir_path: str, verbose: bool = False, file_format: str = 'mmCif') -> list[str]:
