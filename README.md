@@ -83,10 +83,13 @@ Limitations
 * `dssp` implementation is fairly slow for a large number of files
     * ~0.15 seconds per file
     * [DSSP API](https://pdb-redo.eu/dssp/api-doc) unfortunately does not support batched calls
- *  `ids-to-dssp.pipeline` is untested since `dssp` takes so long to run. The individual modules that make up `pipeline` are working.
+ *  `ids-to-dssp.pipeline` is untested since `dssp` takes so long to run
+    * Can likely improve some aspects of `pipeline` but the bottleneck is still `dssp`
+    * The individual modules that make up `pipeline` are working.
 
 Future Expansions
 --- 
+* Add Jupyter notebooks with example use.
 * Implementing support for [DSSP API](https://pdb-redo.eu/dssp/api-doc) for a small number of files
 * Utilizing different implementation of DSSP (e.g. [rs-dssp](pypi.org/project/rs-dssp/)) for faster processing (although accuracy might be lower)
 * Upload to PyPI after polishing
