@@ -1,4 +1,4 @@
-`ids_to_dssp.dssp` 
+`ids_to_dssp.mkdssp` 
 ===
 **Requirement:** install `mkdssp` from https://github.com/PDB-REDO/dssp
 
@@ -23,7 +23,8 @@ def process_file(file_path : str) -> dict:
 def files_to_dssp(files: list[str], use_lazy: bool = True, use_concurrency: bool = False, 
                      max_workers: int = 2, chunk_size: int = 50) -> pl.LazyFrame | pl.DataFrame:
     '''
-    Given a list of PDB IDs, return Polars LazyFrame or DataFrame with `id`, `rcsb_id`, `sequence`, `length`, `strand_id`, and `type` 
+    Given a list of PDB IDs, return Polars LazyFrame or DataFrame with `id`, `amino_acid` `index`, `secondary_structure`, `strand_id`
+
 
     Parameters
     ----------

@@ -35,20 +35,31 @@ def process_file(file_path : str) -> dict:
     with open(file_path, 'r') as f:
         d = dssp(f.read())
 
-    residues = list(d)
+    aa_list = []
+    index_list = []
+    ss_list = []
+    strand_id_list = []
+
+    for residue in d:
+        aa_list.append(residue.compound_id)
+        index_list.append(residue.seq_id)
+        ss_list.append(ss_lookup[residue.type.name])
+        strand_id_list.append(residue.pdb_strand_id)
+
 
     return {
         'id': id.upper(),
-        'amino_acid': [r.compound_id for r in residues],
-        'index': [r.seq_id for r in residues],
-        'secondary_structure': [ss_lookup[r.type.name] for r in residues],
-        'strand_id': [r.pdb_strand_id for r in residues]
+        'amino_acid': aa_list,
+        'index': index_list,
+        'secondary_structure': ss_list,
+        'strand_id': strand_id_list
     }
 
 def files_to_dssp(files: list[str], use_lazy: bool = True, use_concurrency: bool = False, 
                      max_workers: int = 2, chunk_size: int = 50) -> pl.LazyFrame | pl.DataFrame:
     '''
-    Given a list of PDB IDs, return Polars LazyFrame or DataFrame with `id`, `rcsb_id`, `sequence`, `length`, `strand_id`, and `type` 
+    Given a list of PDB IDs, return Polars LazyFrame or DataFrame with `id`, `amino_acid` `index`, `secondary_structure`, `strand_id`.  
+    Uses mkdssp implementation from https://github.com/PDB-REDO/dssp
 
     Parameters
     ----------

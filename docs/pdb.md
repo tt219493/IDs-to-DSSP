@@ -45,7 +45,7 @@ def process_entry(entry: dict) -> dict:
 
 def ids_to_sequences(ids: list[str], use_lazy: bool = True, use_concurrency: bool = False, max_workers: int = 2, chunk_size: int = 50) -> pl.LazyFrame | pl.DataFrame:
     '''
-    Given a list of PDB IDs, return Polars LazyFrame or DataFrame with `id`, `rcsb_id`, `sequence`, `length`, `strand_id`, and `type` 
+    Given a list of PDB IDs, return Polars LazyFrame or DataFrame with `id`, `rcsb_id`, `sequence`, `length`, `strand_id`
      Uses default config settings for RCSB API query.
 
     Parameters
@@ -64,7 +64,7 @@ def ids_to_sequences(ids: list[str], use_lazy: bool = True, use_concurrency: boo
     Returns
     -------
     Polars LazyFrame or DataFrame
-        Contains `id`, `rcsb_id`, `sequence`, `length`, `strand_id`, and `type` 
+        Contains `id`, `rcsb_id`, `sequence`, `length`, `strand_id`
 
     '''
 ```
