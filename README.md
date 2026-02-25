@@ -91,7 +91,7 @@ Future Expansions
 --- 
 * Add Jupyter notebooks with example use.
 * Implementing support for [DSSP API](https://pdb-redo.eu/dssp/api-doc) for a small number of files
-* Utilizing different implementation of DSSP (e.g. [rs-dssp](pypi.org/project/rs-dssp/)) for faster processing (although accuracy might be lower)
+* Utilizing different implementation of DSSP (e.g. [rs-dssp](https://pypi.org/project/rs-dssp/)) for faster processing (although accuracy might be lower)
 * Support for more file inputs/outputs
 * Upload to PyPI after polishing
 
