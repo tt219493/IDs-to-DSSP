@@ -1,4 +1,4 @@
-`ids-to-dssp.pipeline`
+`ids_to_dssp.pipeline`
 ===
 ```Python
 def ids_to_ss(input_path: str, download_path: str, parquet_input: bool = False) -> pl.LazyFrame:
