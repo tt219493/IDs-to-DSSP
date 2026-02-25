@@ -37,8 +37,9 @@ ___
 
 Recent Improvements
 ---
-* Implemented `rs_dssp` instead of [`mkdssp`](https://github.com/PDB-REDO/dssp) (mkdssp version still available in branch)
-    * Can be installed using `pip install`
+* Implemented `rs_dssp` instead of [`mkdssp`](https://github.com/PDB-REDO/dssp)
+    * mkdssp still available with installation documentation in branch
+    * `rs_dssp` can be installed using `pip install`
     * Installation time takes ~2 min instead of ~15 min
     * Running dssp on 6000 files takes ~3 min instead of ~12 min.
 
