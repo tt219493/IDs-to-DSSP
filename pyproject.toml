@@ -22,7 +22,7 @@ dependencies = [
     "numpy<=1.26.4",
     "polars",
     "rcsb-api",
-    "rs-dssp==0.2.1"
+    "rs-dssp==0.2.1" 
 ]
 [project.urls]
 Homepage = "https://github.com/tt219493/ids-to-dssp"
