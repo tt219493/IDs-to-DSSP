@@ -1,3 +1,5 @@
+`ids_to_dssp.rs_dssp`
+===
 ```Python
 def files_to_dssp(files: list[str], use_lazy: bool = True, use_three_letter: bool = True, 
                   num_threads: int = 0) -> pl.LazyFrame | pl.DataFrame:
