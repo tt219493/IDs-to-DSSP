@@ -64,7 +64,7 @@ Future Expansions
 * Support for more file inputs/outputs
 * Upload to PyPI after polishing
 
-Citations
+References
 --- 
 >Kabsch W, Sander C. Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features. Biopolymers 1983; 22:2577-2637. 
 
