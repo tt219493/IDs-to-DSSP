@@ -172,10 +172,7 @@ def combine_to_full(df1: pl.LazyFrame | pl.DataFrame, df2: pl.LazyFrame | pl.Dat
                      pl.col('secondary_structure'),
                      pl.col('sequence').first(),
                      pl.col('length').first()])
-                .explode([
-                     pl.col('amino_acid'),
-                     pl.col('index'),
-                     pl.col('secondary_structure')]))
+                .explode(['amino_acid', 'index', 'secondary_structure']))
 
     
     

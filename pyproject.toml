@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ids_to_dssp"
-version = "1.0.0"
+version = "0.0.2"
 authors = [
   { name="tt219493", email="tt219493@gmail.com" },
 ]
-description = "Retrieves secondary structure for proteins given their RCSB PDB IDs using MKDSSP"
+description = "Retrieves secondary structure for proteins given their RCSB PDB IDs using DSSP"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
@@ -21,7 +21,8 @@ dependencies = [
     "biopython",
     "numpy<=1.26.4",
     "polars",
-    "rcsb-api"
+    "rcsb-api",
+    "rs-dssp==0.2.1" 
 ]
 [project.urls]
 Homepage = "https://github.com/tt219493/ids-to-dssp"

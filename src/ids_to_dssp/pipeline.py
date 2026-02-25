@@ -1,5 +1,5 @@
 from ids_to_dssp.pdb import *
-from ids_to_dssp.dssp import *
+from ids_to_dssp.rs_dssp import *
 from ids_to_dssp.processing import *
 import polars as pl
 
@@ -58,7 +58,7 @@ def ids_to_ss_output(input_path: str, download_path: str, output_path: str, outp
     None
 
     '''
-    df = ids_to_ss(input_path, parquet_input)
+    df = ids_to_ss(input_path, download_path, parquet_input)
     df_to_output(df, output_path, output_name, is_formatted=is_formatted, 
                  only_secondary_structure=only_secondary_structure, to_parquet=parquet_output)
     
@@ -82,7 +82,7 @@ def ids_to_seq(input_path: str, parquet_input: bool = False) -> pl.LazyFrame:
     id_list = ids_to_df(input_path, ids_only=True, is_parquet=parquet_input)
     return ids_to_sequences(id_list)
 
-def ids_to_seq_output(input_path : str, output_path: str, output_name: str, 
+def ids_to_seq_output(input_path : str, output_path: str, output_name: str, parquet_input: bool = False,
                       parquet_output: bool = False, fasta_ouput: bool = False,
                      is_formatted: bool = True, use_rcsb_id: bool = False) -> None:
     '''
@@ -110,6 +110,7 @@ def ids_to_seq_output(input_path : str, output_path: str, output_name: str,
     None
     '''
     df = ids_to_seq(input_path, parquet_input)
+    
     if fasta_ouput:
         df_to_fasta(df, output_path, output_name, use_rcsb_id)
     else:
