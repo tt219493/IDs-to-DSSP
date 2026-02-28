@@ -5,14 +5,17 @@
 Simple Python package to provide labeled secondary structure and protein sequence data when given a file containing IDs from the Protein Data Bank (PDB).
 
 ___
-To retrieve secondary structure from the file (TSV or Parquet) containing IDs, it utilizes `Biopython` to download mmCif/PDB files from wwPDB.  
-Then using those files as input, [`rs_dssp`](https://pypi.org/project/rs-dssp/) (implementation by cheng_shizhuo) outputs secondary structures. 
+To retrieve secondary structure from the file (TSV or Parquet) containing IDs, it gets unique IDs from the file and uses those IDs to make GET calls to 
+[`https://pdb-redo.eu/dssp/db/{pdb_id}/mmcif`](https://pdb-redo.eu/dssp/)  
+(implementation by Hekkelman et al. in the Perrakis group @ NKI Research)
 
-To retrieve protein sequence data from the IDs, it queries using the `rcsb-api` for Python to retrieve relevant sequence data.
+With the data returned from the calls, it retrieves relevant secondary sequence and asym ID/strand ID information.
+
+To retrieve protein sequence data from the IDs, it queries using the `rcsb-api` for Python to retrieve relevant sequence data and asym/strand ID.
 
 The sequencing and secondary structure data can be combined and outputted as a `Polars` LazyFrame or DataFrame which can then be written to a file.
 ___
-Thanks to cheng_shizhuo for `rs_dssp` and Piehl et al. (2025) and Rose et al. (2020) for the RCSB API. 
+Thanks to Hekkelman ML et al. (2025) for `mkdssp`, cheng_shizhuo for `rs_dssp` and Piehl et al. (2025) and Rose et al. (2020) for the RCSB API. 
 
 Getting Started
 ---
@@ -28,7 +31,7 @@ import ids-to-dssp
 
 import ids_to_dssp.processing
 import ids_to_dssp.pdb
-import ids_to_dssp.rs_dssp
+import ids_to_dssp.mkdssp_api
 import ids_to_dssp.pipeline
 ```
 (Might need to add directory to PATH if not working)
@@ -41,32 +44,48 @@ sys.path.append('/content/ids-to-dssp/src')
 ```
 ___
 
-Recent Improvements
+Recent Changes and Improvements
 ---
-* Implemented `rs_dssp` instead of [`mkdssp`](https://github.com/PDB-REDO/dssp)
-    * mkdssp still available with installation documentation in branch
-    * `rs_dssp` can be installed using `pip install`
-    * Installation time takes ~2 min instead of ~15 min
-    * Running dssp on 6000 files takes ~3 min instead of ~12 min.
+* Implemented `mkdssp_api` over `rs_dssp` and [`mkdssp`](https://github.com/PDB-REDO/dssp)
+    * Utilizes GET calls to retrieve information from 
+    [mkdssp website](https://pdb-redo.eu/dssp/)
+    * Relies on internet speeds but personally takes ~27 min for 6000+ files
+    * No need for installation or local downloads
+    * Utilized in `pipeline`
+
+* `rs_dssp` has fastest processing (~3 min for 6000+ files)
+    * Requires pip install
+    * Requires download of all necessary mmCif files
+    * Stated to have 97% accuracy
+    * Returns`seq_id` data from the author, 
+    which need to be correctly aligned with `seq_id` from PDB
+        * Requires `Bio` to parse all files to get proper alignments (~22 min)
+
+* `mkdssp` might be best if already installed (installation documentation in branch)
+    * Requires download of all necessary mmCif files
+    * ~15 min for processing 6000+ files
+
+   
 
 Limitations
 ---
 * Currently only tested in Colab
-* Requires download of mmCif/PDB files
-    * For reference: 6000 mmCif files ~ 3 GB
-* Requires installation of `rs-dssp`
- *  `ids-to-dssp.pipeline` is untested 
-    * The individual modules that make up `pipeline` are working.
+* Unfortunately, all methods are somewhat slow
+    * `mkdssp_api` requires the least preparation and doesn't require download to local storage, so I believe this is the current best
+
+    * Fastest and most accurate would probably be having local access to DSSP files, but this package is supposed to provide a workaround
+
 
 Future Expansions
 --- 
-* Add Jupyter notebooks with example use.
-* Implementing support for [DSSP API](https://pdb-redo.eu/dssp/api-doc) for a small number of files
+* Potentially find another way to get DSSP files but I believe these are currently the best options
 * Support for more file inputs/outputs
 * Upload to PyPI after polishing
 
 References
 --- 
+>Hekkelman ML, Salmoral DÁ, Perrakis A, Joosten RP DSSP 4: FAIR annotation of protein secondary structure. Protein Science. 2025; 34(8):e70208. 
+
 >Kabsch W, Sander C. Dictionary of protein secondary structure: pattern recognition of hydrogen-bonded and geometrical features. Biopolymers 1983; 22:2577-2637. 
 
 >Dennis W. Piehl, Brinda Vallat, Ivana Truong, Habiba Morsy, Rusham Bhatt, Santiago Blaumann, Pratyoy Biswas, Yana Rose, Sebastian Bittrich, Jose M. Duarte, Joan Segura, Chunxiao Bi, Douglas Myers-Turnbull, Brian P. Hudson, Christine Zardecki, Stephen K. Burley. rcsb-api: Python Toolkit for Streamlining Access to RCSB Protein Data Bank APIs, Journal of Molecular Biology, 2025. DOI: 10.1016/j.jmb.2025.168970

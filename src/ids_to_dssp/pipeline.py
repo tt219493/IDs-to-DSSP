@@ -1,9 +1,10 @@
 from ids_to_dssp.pdb import *
-from ids_to_dssp.rs_dssp import *
+from ids_to_dssp.mkdssp_api import *
 from ids_to_dssp.processing import *
 import polars as pl
 
-def ids_to_ss(input_path: str, download_path: str, parquet_input: bool = False) -> pl.LazyFrame:
+def ids_to_ss(input_path: str, download_path: str, max_concurrency: int = 50, 
+              parquet_input: bool = False) -> pl.LazyFrame | Any:
     '''
     Given IDs in file, return a LazyFrame with all secondary structures for given IDs. 
     LazyFrame output will be enforced for efficiency.
@@ -14,21 +15,23 @@ def ids_to_ss(input_path: str, download_path: str, parquet_input: bool = False) 
         Path to file 
     download_path: str
         Path to directory where all mmCif files will be downloaded
+    max_concurrency: int = 50
+        Amount of requests to DSSP website to make at once
     parquet_input: bool = False
         Set whether the input is a parquet or TSV
     
     Returns
     -------
     pl.LazyFrame
-    Contains amino acid, index, secondary structure, and strand id data 
+    Contains amino acid, index, secondary structure, strand id, and asym_id data 
 
     '''
     id_list = ids_to_df(input_path, ids_only=True, is_parquet=parquet_input)
-    file_list = ids_to_pdb_download(id_list, download_path)
-    return files_to_dssp(file_list)
+    return ids_to_dssp(id_list, max_concurrency=max_concurrency)
 
 
 def ids_to_ss_output(input_path: str, download_path: str, output_path: str, output_name: str, 
+                     max_concurrency: int = 50,
                      parquet_input: bool = False, parquet_output: bool = False, 
                      is_formatted: bool = True, only_secondary_structure: bool = False) -> None:
     '''
@@ -44,6 +47,8 @@ def ids_to_ss_output(input_path: str, download_path: str, output_path: str, outp
         Path to directory where output file will be stored
     output_name : str
         Name of output file
+     max_concurrency: int = 50
+        Amount of requests to DSSP website to make at once       
     parquet_input: bool = False
         Set whether the input is a parquet or TSV
     parquet_output: bool = False
@@ -58,7 +63,7 @@ def ids_to_ss_output(input_path: str, download_path: str, output_path: str, outp
     None
 
     '''
-    df = ids_to_ss(input_path, download_path, parquet_input)
+    df = ids_to_ss(input_path, download_path, max_concurrency, parquet_input)
     df_to_output(df, output_path, output_name, is_formatted=is_formatted, 
                  only_secondary_structure=only_secondary_structure, to_parquet=parquet_output)
     
