@@ -1,5 +1,6 @@
-IDs To DSSP: Secondary Structure and Protein Sequence Retriever
-===
+# IDs To DSSP 
+## Secondary Structure and Protein Sequence Retriever
+
 ### 
 Simple Python package to provide labeled secondary structure and protein sequence data when given a file containing IDs from the Protein Data Bank (PDB).
 
